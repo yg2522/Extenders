@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace loctool.Utility.Extenders
+namespace Utility.Extenders
 {
     public static class TypeExtenders
     {
