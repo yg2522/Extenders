@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace loctool.Utility.Extenders
+namespace Utility.Extenders
 {
     public static class XmlExtenders
     {
