@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace loctool.Utility.Extenders
+namespace Utility.Extenders
 {
     public static class StringExtenders
     {
