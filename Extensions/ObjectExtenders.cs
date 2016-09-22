@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace loctool.Utility.Extenders
+namespace Utility.Extenders
 {
     public static class ObjectExtenders
     {
