@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace loctool.Utility.Extenders
+namespace Utility.Extenders
 {
     /// <summary>DictionaryExtenders</summary>
     /// <author creationDate="10/11/2012 4:14 PM">jjohannes</author>
