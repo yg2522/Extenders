@@ -1,0 +1,46 @@
+﻿﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ output extension=".cs" #>
+<#@ assembly name="System" #>
+<#@ import namespace="System.Text.RegularExpressions" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+using System;
+using System.ComponentModel;
+
+namespace LMCU.OnlineBanking.Services.Utilities //namespace the enums will live in
+{
+	public enum TimezoneEnum
+	{
+<#CreateEnum();#>
+	}
+}
+<#+
+
+private string ParseEntityField(string name)
+{
+	// Remove all special characters from name
+	return Regex.Replace(name, "[^0-9a-zA-Z]+", string.Empty, RegexOptions.Multiline);
+}
+ 
+private void CreateEnum()
+{  
+
+	PushIndent("\t");
+	PushIndent("\t");
+	foreach (TimeZoneInfo z in TimeZoneInfo.GetSystemTimeZones())
+	{
+		//write the description
+		string descriptionvalue = z.Id;
+		var description = string.Format("[Description(\"{0}\")]", descriptionvalue);
+		WriteLine(description);
+			
+		string name = ParseEntityField(z.StandardName);
+		var option = string.Format("{0},", name);
+		WriteLine(option);
+
+	}
+	PopIndent();
+	PopIndent();
+	
+}
+#>
