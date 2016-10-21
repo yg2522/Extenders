@@ -15,7 +15,7 @@ namespace Utility.Extenders
         /// </summary>
         /// <param name="value"></param>
         /// <returns></returns>
-        public static string GetDescription(this Enum value, string seperatorFormat = null, bool includeZeroValue = false)
+        public static string GetDescription(this Enum value, string seperatorFormat = null)
         {
             StringBuilder description = new StringBuilder();
             var type = value.GetType();
@@ -37,8 +37,7 @@ namespace Utility.Extenders
                     //get each flag that the enum contains
                     foreach (var val in Enum.GetValues(type))
                     {
-                        if ((includeZeroValue && Convert.ToInt64(val) == 0 && Enum.IsDefined(type, val)) //include zero if defined and flag is set
-                            || (Convert.ToInt64(val) != 0 && Enum.IsDefined(type, val))) //include all other numbers that aren't zero and defined
+                        if ((Convert.ToInt64(val) != 0 && Enum.IsDefined(type, val))) //include all other numbers that aren't zero and defined
                         {
                             FieldInfo info = type.GetField(val.ToString());
                             fieldinfos.Add(info);
