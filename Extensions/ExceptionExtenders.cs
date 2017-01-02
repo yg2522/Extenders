@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Utility.Extenders
+namespace Extenders
 {
     public static class ExceptionExtenders
     {

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateTimeExtenders.cs" />
     <Compile Include="DictionaryExtenders.cs" />
     <Compile Include="EnumExtenders.cs" />
     <Compile Include="ExceptionExtenders.cs" />
@@ -46,8 +47,23 @@
     <Compile Include="ObjectExtenders.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StringExtenders.cs" />
+    <Compile Include="TaskExtenders.cs" />
+    <Compile Include="TimezoneEnum.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TimezoneEnum.tt</DependentUpon>
+    </Compile>
     <Compile Include="TypeExtenders.cs" />
     <Compile Include="XmlExtenders.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TimezoneEnum.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TimezoneEnum.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
 
-namespace Utility.Extenders
+namespace Extenders
 {
     public static class XmlExtenders
     {

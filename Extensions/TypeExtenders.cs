@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 
-namespace Utility.Extenders
+namespace Extenders
 {
     public static class TypeExtenders
     {

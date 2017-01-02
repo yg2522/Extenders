@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Utility.Extenders
+namespace Extenders
 {
     public static class StringExtenders
     {

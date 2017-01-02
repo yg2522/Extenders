@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.ComponentModel;
 
-namespace Utility.Extenders
+namespace Extenders
 {
     public static class DateTimeExtenders
     {

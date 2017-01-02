@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Utility.Extenders
+namespace Extenders
 {
     public static class ObjectExtenders
     {
