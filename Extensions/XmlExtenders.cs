@@ -1,16 +1,41 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace Extenders
 {
     public static class XmlExtenders
     {
+        public static T FromXml<T>(this string xmlText)
+        {
+            if (String.IsNullOrWhiteSpace(xmlText)) return default(T);
+
+            using (StringReader stringReader = new StringReader(xmlText))
+            {
+                var serializer = new XmlSerializer(typeof(T));
+                return (T)serializer.Deserialize(stringReader);
+            }
+        }
+
+        public static string ToXml<T>(this T dataToSerialize)
+        {
+            string value = string.Empty;
+            using (var stringwriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(dataToSerialize.GetType());
+                serializer.Serialize(stringwriter, dataToSerialize);
+                value = stringwriter.ToString();
+            }
+            return value;
+        }
+
         public static string ElementValue(this XElement element, string name, string defaultValue = "")
         {
             var child = element.Element(name);
