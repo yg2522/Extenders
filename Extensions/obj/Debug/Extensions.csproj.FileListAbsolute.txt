@@ -1,9 +1,0 @@
-C:\Users\gyoung\Documents\GitHub\Extenders\Extensions\bin\Debug\Extensions.dll
-C:\Users\gyoung\Documents\GitHub\Extenders\Extensions\bin\Debug\Extensions.pdb
-C:\Users\gyoung\Documents\GitHub\Extenders\Extensions\obj\Debug\Extensions.csprojResolveAssemblyReference.cache
-C:\Users\gyoung\Documents\GitHub\Extenders\Extensions\obj\Debug\Extensions.dll
-C:\Users\gyoung\Documents\GitHub\Extenders\Extensions\obj\Debug\Extensions.pdb
-C:\Users\gary.young\Desktop\Extensions\Extensions\obj\Debug\Extensions.dll
-C:\Users\gary.young\Desktop\Extensions\Extensions\obj\Debug\Extensions.pdb
-C:\Users\gary.young\Desktop\Extensions\Extensions\bin\Debug\Extensions.dll
-C:\Users\gary.young\Desktop\Extensions\Extensions\bin\Debug\Extensions.pdb
