@@ -44,7 +44,7 @@ namespace Extensions
             Func<Exception, bool> exceptionCallback = null,
             int maxAttemptCount = 3)
         {
-            var exceptions = new List<Exception>();
+            var exceptions = new HashSet<Exception>(new ObjectEqualityComparer<Exception>());
             var retry = true;
             for (int attempted = 0; attempted < maxAttemptCount && retry; attempted++)
             {
@@ -62,7 +62,10 @@ namespace Extensions
                     exceptions.Add(ex);
                 }
             }
-            throw new AggregateException(exceptions);
+            if (exceptions.Count > 1)
+                throw new AggregateException(exceptions);
+            else
+                throw exceptions.First();
         }
     }
 }
