@@ -1,0 +1,140 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ assembly name="$(TargetDir)FromAssembly.dll" #>
+<#@ assembly name="$(TargetDir)ToAssembly.dll" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ import namespace="System.Reflection" #>
+<#@ output extension=".cs" #>
+<#
+
+//our current namespace that the T4 is in using the folder structure
+_Namespace = (string)System.Runtime.Remoting.Messaging.CallContext.LogicalGetData("NamespaceHint");
+
+// Types to create that are found within the assemblies above
+_ToType = typeof(Fully.Qualified.ToClassType);
+_FromType = typeof(Fully.Qualified.FromClassType);
+
+//mappings for properties if the property names don't match
+_Mappings = new Dictionary<string, Tuple<string, string>>()
+{
+	{ "ToPropertyName", new Tuple<string, string>("FromPropertyname", ".OptionalLinq()" ) },  //optionalLinq like .ToString() will be applied to the from property
+};
+#>
+namespace <#=_Namespace#>
+{
+	public static class <#=_ToType.Name#>Factory
+	{
+		public static <#=_ToType.FullName#> Get(<#=_FromType.FullName#> from)
+		{
+			return new <#=_ToType.FullName#>()
+			{
+<#CreatePropertySetters();#>
+			};
+		}
+	}
+}
+<#+
+//Helper T4 Variables and methods
+private Type _ToType;
+private Type _FromType;
+private string _Namespace;
+private Dictionary<string, Tuple<string, string>> _Mappings;
+
+private void CreatePropertySetters()
+{
+	PushIndent("\t");
+	PushIndent("\t");
+	PushIndent("\t");
+	PushIndent("\t");
+	PropertyInfo[] toProperties = _ToType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+	PropertyInfo[] fromProperties = _FromType.GetProperties(BindingFlags.Public | BindingFlags.Instance);
+	StringBuilder propertySetters = new StringBuilder();
+	foreach (PropertyInfo p in toProperties)
+	{
+		if (!p.CanWrite || !p.CanRead) //can't read or write
+			continue;
+
+		MethodInfo mget = p.GetGetMethod(false);
+		MethodInfo mset = p.GetSetMethod(false);
+
+		// Get and set methods have to be public
+		if (mget == null)
+			continue; 
+		if (mset == null)
+			continue;
+
+		//get the mapping if there is any
+	    PropertyInfo fromProp;
+		string postLinqValue = string.Empty;
+		if(_Mappings.ContainsKey(p.Name))
+		{
+			fromProp = fromProperties.FirstOrDefault(x => x.Name == _Mappings[p.Name].Item1);
+			postLinqValue = _Mappings[p.Name].Item2;
+		}
+		else
+		{
+			fromProp = fromProperties.FirstOrDefault(x => x.Name == p.Name);
+		}
+
+		if(fromProp == null) 
+		{
+			
+			//not mappped nor any direct matches
+			WriteLine($"//{p.Name} = from.{p.Name},");
+		}
+		else
+		{
+			var toPropertyType = p.PropertyType;
+			var totype = Nullable.GetUnderlyingType(toPropertyType);
+			var toTypeNullable = false;
+			if(totype != null)
+			{
+				toPropertyType = totype;
+				toTypeNullable = true;
+			}
+
+			var fromPropertyType = fromProp.PropertyType;
+			var fromtype = Nullable.GetUnderlyingType(fromPropertyType);
+			var fromTypeNullable = false;
+			if(fromtype != null)
+			{
+				fromPropertyType = fromtype;
+				fromTypeNullable = true;
+			}
+
+			//if the property shouldn't be nullable, get the value of the nullable type
+			string postNullValue = string.Empty;
+			if(fromTypeNullable && !toTypeNullable)
+			{
+				postNullValue = ".Value";
+			}
+
+			//Write the property setter according to conditions
+			if(toPropertyType.IsEnum)
+			{
+				//cast to new type
+				if(fromPropertyType == typeof(string))
+				{
+					WriteLine($"{p.Name} = ({toPropertyType.FullName})(Enum.Parse(typeof({toPropertyType.FullName}), from.{p.Name}{postLinqValue})),");
+				}
+				else if(fromPropertyType.IsEnum || fromPropertyType == typeof(int))
+				{
+					WriteLine($"{p.Name} = ({toPropertyType.FullName})(from.{p.Name}{postLinqValue}),");
+				}
+			}
+			else
+			{
+				//default write
+				WriteLine($"{p.Name} = from.{fromProp.Name}{postNullValue}{postLinqValue}, //{toPropertyType.FullName}");
+			}
+		}
+	}
+	PopIndent();
+	PopIndent();
+	PopIndent();
+	PopIndent();
+}
+
+#>

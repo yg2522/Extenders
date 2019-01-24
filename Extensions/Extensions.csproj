@@ -43,6 +43,11 @@
     <Compile Include="DictionaryExtenders.cs" />
     <Compile Include="EnumExtenders.cs" />
     <Compile Include="ExceptionExtenders.cs" />
+    <Compile Include="Factory.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Factory.tt</DependentUpon>
+    </Compile>
     <Compile Include="IEnumerableExtenders.cs" />
     <Compile Include="Log4NetExtenders.cs" />
     <Compile Include="ObjectEqualityComparer.cs" />
@@ -60,6 +65,10 @@
     <Compile Include="XmlExtenders.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Factory.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Factory.cs</LastGenOutput>
+    </Content>
     <Content Include="TimezoneEnum.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TimezoneEnum.cs</LastGenOutput>
